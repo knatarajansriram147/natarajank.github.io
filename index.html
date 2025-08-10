@@ -1,45 +1,236 @@
-<!DOCTYPE html>
+<!--
+Single-file portfolio template + step-by-step deployment guide (GitHub Pages)
+
+How to use this file (quick):
+1. Replace placeholders (YOUR_NAME, YOUR_ROLE, SHORT_BIO, githubUsername, resume.pdf, project details) in the HTML below.
+2. Add any images to an /assets folder in the same repo (e.g. assets/project1.png, assets/me.jpg).
+3. Create a new GitHub repository.
+   Option A (User/Org site - simplest):
+     - Name the repo exactly: <your-github-username>.github.io
+     - Push this index.html to the repo root (main branch). GitHub Pages will publish at https://<your-github-username>.github.io
+   Option B (Project site):
+     - Name the repo whatever you like (e.g. portfolio).
+     - Push index.html to the main branch.
+     - In the repo Settings > Pages, choose main branch / root (or /docs) and save.
+     - Published URL will be https://<your-github-username>.github.io/<repo>
+
+Quick git commands (run from your project folder):
+  git init
+  git add .
+  git commit -m "Initial portfolio"
+  git branch -M main
+  git remote add origin https://github.com/YOUR_USERNAME/YOUR_REPO.git
+  git push -u origin main
+
+Optional: If you prefer to use a static site generator (Jekyll/Hugo) or a React/Vite app,
+I can provide a separate guide. For a React app you'll typically build and deploy to GitHub Pages (gh-pages) or use GitHub Actions.
+
+Notes and tips:
+- Keep images small (recommended max 200-300KB) and use descriptive alt text.
+- Host resume.pdf in the repo (e.g. assets/resume.pdf) and link using /assets/resume.pdf.
+- For a custom domain, add a CNAME file containing your domain and configure DNS (A records) to GitHub Pages.
+- You can add a README.md to the repo to show a text version of your portfolio on GitHub.
+- If you want CI/CD deploys automatically from a build (React/Vite), use GitHub Actions; I can provide a workflow.
+
+-->
+
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Portfolio</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>YOUR NAME — Portfolio</title>
+  <meta name="description" content="Portfolio of YOUR NAME — Mechanical Design Engineer | Chassis | Battery enclosures | Suspension" />
+  <meta property="og:title" content="YOUR NAME — Portfolio" />
+  <meta property="og:description" content="Mechanical Design Engineer. Examples of chassis, enclosures and suspension design." />
+  <link rel="icon" href="data:;base64,iVBORw0KGgo=" />
+  <!-- Google Font (optional) -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#0f1724; /* dark slate */
+      --card:#0b1220;
+      --muted:#9aa4b2;
+      --accent:#06b6d4;
+      --glass: rgba(255,255,255,0.03);
+      --maxw:1100px;
+      --radius:12px;
+      color-scheme: dark;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial; background:linear-gradient(180deg,#071025 0%, #041226 100%); color:#e6eef6; line-height:1.5;
+      -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+      display:flex; justify-content:center; padding:40px 20px;
+    }
+    .wrap{width:100%; max-width:var(--maxw)}
+    header{display:flex; justify-content:space-between; align-items:center; margin-bottom:28px}
+    nav a{color:var(--muted); text-decoration:none; margin-left:18px; font-size:14px}
+    .card{background:var(--card); border-radius:var(--radius); padding:18px; box-shadow: 0 6px 20px rgba(2,6,23,0.6);}
+
+    .hero{display:grid; grid-template-columns:1fr 320px; gap:24px; align-items:center}
+    .me{width:100%; height:320px; border-radius:12px; overflow:hidden; background:linear-gradient(135deg,var(--glass), rgba(255,255,255,0.02)); display:flex; align-items:center; justify-content:center}
+    .me img{width:100%; height:100%; object-fit:cover}
+    h1{margin:0; font-size:28px}
+    h2{margin:6px 0 0 0; font-size:16px; color:var(--muted)}
+    .summary{margin-top:12px; color:var(--muted)}
+
+    .grid{display:grid; grid-template-columns: repeat(3,1fr); gap:16px; margin-top:18px}
+    .skills{display:flex; flex-wrap:wrap; gap:8px}
+    .skill{background:rgba(255,255,255,0.03); padding:8px 10px; border-radius:999px; font-size:13px; color:var(--muted)}
+
+    .projects{margin-top:20px}
+    .project{display:flex; gap:12px; align-items:flex-start}
+    .project img{width:120px; height:80px; object-fit:cover; border-radius:8px; flex-shrink:0}
+    .project .meta{color:var(--muted)}
+
+    footer{margin-top:30px; display:flex; justify-content:space-between; align-items:center; color:var(--muted); font-size:13px}
+
+    /* responsive */
+    @media (max-width:900px){
+      .hero{grid-template-columns:1fr;}
+      .grid{grid-template-columns: repeat(2,1fr)}
+    }
+    @media (max-width:520px){
+      body{padding:18px}
+      .grid{grid-template-columns:1fr}
+      nav a{margin-left:10px}
+      .me{height:220px}
+    }
+
+    .btn{background:linear-gradient(90deg,var(--accent),#3b82f6); color:#022; padding:10px 14px; border-radius:10px; text-decoration:none; font-weight:600}
+    .muted{color:var(--muted)}
+  </style>
 </head>
 <body>
+  <div class="wrap">
     <header>
-        <h1>Welcome to My Portfolio</h1>
-        <nav>
-            <ul>
-                <li><a href="#about">About</a></li>
-                <li><a href="#projects">Projects</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-        </nav>
+      <div>
+        <strong style="font-size:16px">YOUR NAME</strong>
+        <div class="muted">YOUR_ROLE • Location</div>
+      </div>
+      <nav>
+        <a href="#projects">Projects</a>
+        <a href="#skills">Skills</a>
+        <a href="#contact">Contact</a>
+      </nav>
     </header>
-    <main>
-        <section id="about">
-            <h2>About Me</h2>
-            <p>A brief introduction about yourself.</p>
-        </section>
-        <section id="projects">
-            <h2>Projects</h2>
-            <div class="project">
-                <h3>Project 1</h3>
-                <p>Description of Project 1.</p>
-            </div>
-            <div class="project">
-                <h3>Project 2</h3>
-                <p>Description of Project 2.</p>
-            </div>
-        </section>
-        <section id="contact">
-            <h2>Contact</h2>
-            <p>Email: your-email@example.com</p>
-        </section>
-    </main>
+
+    <section class="card hero">
+      <div>
+        <h1>YOUR NAME</h1>
+        <h2>YOUR_ROLE — short tagline or one-liner</h2>
+        <p class="summary">SHORT_BIO: 2–3 short sentences describing who you are and what you build. E.g. Mechanical design engineer specializing in two-wheeler chassis, battery enclosures, and suspension. Open to roles in design & development.</p>
+
+        <div style="margin-top:14px" class="skills">
+          <span class="skill">CAD: Creo, NX, CATIA</span>
+          <span class="skill">FEA: Abaqus, ANSYS</span>
+          <span class="skill">Materials: Steel, Aluminum, Plastics</span>
+          <span class="skill">Manufacturing: Castings, Forgings, Sheet metal</span>
+        </div>
+
+        <div style="margin-top:18px; display:flex; gap:10px; align-items:center">
+          <a class="btn" href="/assets/resume.pdf" target="_blank">Download Resume</a>
+          <a class="muted" href="mailto:your.email@example.com?subject=Portfolio%20enquiry">Contact</a>
+        </div>
+
+        <div id="github-section" style="margin-top:18px">
+          <h3 id="projects">Recent code repos</h3>
+          <div id="github-projects" class="grid"></div>
+        </div>
+
+      </div>
+      <aside class="me card">
+        <!-- Replace with your photo at assets/me.jpg -->
+        <img src="assets/me.jpg" alt="Your Name" onerror="this.src='https://via.placeholder.com/400x320?text=Upload+assets/me.jpg'" />
+      </aside>
+    </section>
+
+    <section class="card projects" style="margin-top:18px">
+      <h3>Selected Projects</h3>
+
+      <!-- Example project entry: duplicate and edit -->
+      <div class="project" style="margin-top:12px">
+        <img src="assets/project1.png" alt="Project 1" onerror="this.src='https://via.placeholder.com/240x160?text=Project+Image'" />
+        <div>
+          <strong>Lightweight Chassis — Motovolt M7</strong>
+          <div class="meta">Reduced weight by 25% and improved stability through topology optimization and section redesign. Tools: Creo, Ansys.</div>
+        </div>
+      </div>
+
+      <div class="project" style="margin-top:12px">
+        <img src="assets/project2.png" alt="Project 2" onerror="this.src='https://via.placeholder.com/240x160?text=Project+Image'" />
+        <div>
+          <strong>Battery enclosure — Smart Utility Case</strong>
+          <div class="meta">Designed an integrated battery enclosure using aluminium extrusion for last-mile delivery vehicle. Completed FEA for crash and thermal checks.</div>
+        </div>
+      </div>
+
+    </section>
+
+    <section class="card" id="skills" style="margin-top:18px">
+      <h3>Skills & Tools</h3>
+      <div style="margin-top:8px; display:flex; gap:20px; flex-wrap:wrap">
+        <div style="min-width:240px">
+          <strong>Design</strong>
+          <div class="muted">Creo, NX, CATIA, GD&T, tolerance stacks</div>
+        </div>
+        <div style="min-width:240px">
+          <strong>Analysis</strong>
+          <div class="muted">ANSYS, Abaqus, FEA, modal & static analysis</div>
+        </div>
+        <div style="min-width:240px">
+          <strong>Manufacturing</strong>
+          <div class="muted">Castings, Forging, Sheet metal, Assembly process</div>
+        </div>
+      </div>
+    </section>
+
     <footer>
-        <p>&copy; 2024 Your Name</p>
+      <div class="muted">© YEAR YOUR NAME</div>
+      <div><a class="muted" href="#contact">your.email@example.com</a></div>
     </footer>
+  </div>
+
+  <script>
+    // Replace this username with your GitHub username to auto-load public repos
+    const githubUsername = 'REPLACE_WITH_GITHUB_USERNAME';
+
+    async function loadRepos(name){
+      if(!name || name.includes('REPLACE')) return document.getElementById('github-projects').innerHTML = '<div class="muted">Set your GitHub username in the HTML to auto-load repos.</div>';
+      try{
+        const res = await fetch(`https://api.github.com/users/${name}/repos?per_page=8&sort=updated`);
+        if(!res.ok) throw new Error('GitHub API error');
+        const repos = await res.json();
+        const container = document.getElementById('github-projects');
+        container.innerHTML = '';
+        const filtered = repos.filter(r=>!r.fork).slice(0,6);
+        if(filtered.length===0) container.innerHTML = '<div class="muted">No public repos found.</div>';
+        filtered.forEach(r=>{
+          const el = document.createElement('a');
+          el.className = 'card project';
+          el.style.display = 'block';
+          el.style.textDecoration = 'none';
+          el.style.color = 'inherit';
+          el.href = r.html_url;
+          el.target = '_blank';
+          el.innerHTML = `
+            <div style=\"display:flex;align-items:center;gap:12px\"> 
+              <div style=\"width:100%;\"> 
+                <strong>${r.name}</strong>
+                <div class=\"meta\">${(r.description||'No description') + ' • ' + (r.language||'')}</div>
+              </div>
+              <div class=\"muted\">★ ${r.stargazers_count}</div>
+            </div>`;
+          container.appendChild(el);
+        })
+      }catch(e){
+        document.getElementById('github-projects').innerHTML = '<div class="muted">Could not load repos (rate limit or network).</div>';
+        console.error(e);
+      }
+    }
+    loadRepos(githubUsername);
+  </script>
 </body>
 </html>
